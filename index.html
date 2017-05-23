@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <style>
+            img, embed, object, video {
+                max-width: 100%;
+                height: 100%;
+            }
+
+            * {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -ms-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            .img-caption {
+                text-align: center;
+                font-size:26px;
+            }
+
+            #catSubmit {
+                margin-bottom: 5px;
+                color: blue;
+            }
+        </style>
+
+        <title>Cat Clicker</title>
+    </head>
+    <body>
+        <div class="container" style="text-align: center">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <p class='img-caption'>Pick-a-Kitty</p>
+                    <input type='button' id=catSubmit value='Submit Cat Pick'>
+                    <select id="catPick">
+
+                    </select>
+                </div>
+
+
+                <div class='col-sm-9'>
+                    <p class='img-caption catHdr'></p>
+                    <img id="cat-pic" class="img-responsive" src='' alt=''>
+                    <form style="padding-top: 15px">
+                        Times Clicked:
+                        <input type='text' name='firstCount' id='count1'>
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+        <script>
+
+            //Create an array to hold objects for each cat
+            var catListing = [
+                {source:'img/suit-cat.jpg',txt:'Cat in a Suit', counter: 0},
+                {source:'img/cat-and-tree.jpg',txt:'Cat by a Tree', counter: 0},
+                {source:'img/dragon-kitty.jpg',txt:'Firebreathing Cat', counter: 0},
+                {source:'img/kitty-burrito.jpg',txt:'Cat Rolled in a Rug', counter: 0},
+                {source:'img/rambo-cats.jpg',txt:'Cats with a Gun', counter: 0}
+            ];
+
+            //Populate the select node with available cat options
+            function loadCatList() {
+                for(var i = 0; catListing.length > i; i++) {
+                    $('#catPick').append('<option>' + catListing[i].txt);
+                    //Initialize the image window with the first object in array
+                    if(i===0) {
+                        $('#cat-pic').attr('src', catListing[i].source).attr('alt', catListing[i].txt);
+                        $('.catHdr').text(catListing[i].txt);
+                    }
+                }
+            }
+
+            loadCatList();
+
+            //Switch the cat image and header value based on user selection
+            $('#catSubmit').click(function() {
+                console.log($('#catPick').val());
+
+                for(var i = 0; catListing.length > i; i++) {
+                    if($('#catPick').val() === catListing[i].txt) {
+                        $('#cat-pic').attr('src', catListing[i].source).attr('alt', catListing[i].txt);
+                        $('.catHdr').text(catListing[i].txt);
+                    }
+                }
+            });
+
+            /*
+            $('.catHdr1').text($('#cat-pic1').attr('alt'));
+            $('.catHdr2').text($('#cat-pic2').attr('alt'));
+
+            $("#cat-pic1").click(function(e) {
+                clicks1 += 1;
+                $("#count1").val(' ' + clicks1);
+            });
+
+            $("#cat-pic2").click(function(e) {
+                clicks2 += 1;
+                $("#count2").val(' ' + clicks2);
+            });
+            */
+        </script>
+
+    </body>
+</html>
