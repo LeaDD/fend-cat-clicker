@@ -85,32 +85,29 @@
 
             loadCatList();
 
+            //This variable will hold the array index of the cat the user has selected
+            var selectedCatIndex = 0;
+
             //Switch the cat image and header value based on user selection
             $('#catSubmit').click(function() {
-                console.log($('#catPick').val());
-
                 for(var i = 0; catListing.length > i; i++) {
                     if($('#catPick').val() === catListing[i].txt) {
                         $('#cat-pic').attr('src', catListing[i].source).attr('alt', catListing[i].txt);
+                        $("#count1").val(' ' + catListing[i].counter);
                         $('.catHdr').text(catListing[i].txt);
+
+                        selectedCatIndex = i;
+                        break;
                     }
                 }
             });
 
-            /*
-            $('.catHdr1').text($('#cat-pic1').attr('alt'));
-            $('.catHdr2').text($('#cat-pic2').attr('alt'));
-
-            $("#cat-pic1").click(function(e) {
-                clicks1 += 1;
-                $("#count1").val(' ' + clicks1);
+            //Update the counter for selected cat anytime the cat's image is clicked
+            $("#cat-pic").click(function(e) {
+                catListing[selectedCatIndex].counter += 1;
+                $("#count1").val(' ' + catListing[selectedCatIndex].counter);
             });
 
-            $("#cat-pic2").click(function(e) {
-                clicks2 += 1;
-                $("#count2").val(' ' + clicks2);
-            });
-            */
         </script>
 
     </body>
