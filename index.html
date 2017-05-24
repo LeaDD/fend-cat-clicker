@@ -33,9 +33,11 @@
 
         <title>Cat Clicker</title>
     </head>
+
     <body>
         <div class="container" style="text-align: center">
             <div class="row">
+                <!--This column will hold the cat selector list and submit -->
                 <div class='col-sm-3'>
                     <p class='img-caption'>Pick-a-Kitty</p>
                     <input type='button' id=catSubmit value='Submit Cat Pick'>
@@ -44,7 +46,7 @@
                     </select>
                 </div>
 
-
+                <!--This column will actually display the cat and click count -->
                 <div class='col-sm-9'>
                     <p class='img-caption catHdr'></p>
                     <img id="cat-pic" class="img-responsive" src='' alt=''>
@@ -53,15 +55,11 @@
                         <input type='text' name='firstCount' id='count1'>
                     </form>
                 </div>
-
-
-
             </div>
         </div>
 
 
         <script>
-
             //Create an array to hold objects for each cat
             var catListing = [
                 {source:'img/suit-cat.jpg',txt:'Cat in a Suit', counter: 0},
