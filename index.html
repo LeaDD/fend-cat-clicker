@@ -61,6 +61,7 @@
 
         <script>
 
+            //MODEL
             var model = {
                 //Create an array to hold objects for each cat
                 catListing: [
@@ -98,6 +99,8 @@
                 $("#count1").val(' ' + model.catListing[selectedCatIndex].counter);
             });
 
+
+            //VIEWS
             var view = {
                 //Populate the select node with available cat options
                 loadCatList: function() {
