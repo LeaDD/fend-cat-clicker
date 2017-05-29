@@ -70,11 +70,14 @@
                 {source:'img/dragon-kitty.jpg',txt:'Firebreathing Cat', counter: 0},
                 {source:'img/kitty-burrito.jpg',txt:'Cat Rolled in a Rug', counter: 0},
                 {source:'img/rambo-cats.jpg',txt:'Cats with a Gun', counter: 0}
-                ]
+                ],
+                updateCount: function(e) {
+                    catList[selectedCatIndex].counter += 1;
+                    $("#count1").val(' ' + catList[selectedCatIndex].counter);
+                }
             };
 
             var catList = model.catListing;
-
 
             //This variable will hold the array index of the cat the user has selected
             var selectedCatIndex = 0;
@@ -88,17 +91,14 @@
                 },
                 init: function() {
                     view.loadCatList();
-                    var catImg = $('#catSubmit');
-                    catImg.click(view.switchCat);
 
+                    //Add event listeners to submit and pic
+                    var catImg = $('#catSubmit');
+                    var catCntr = $("#cat-pic");
+                    catImg.click(view.switchCat);
+                    catCntr.click(model.updateCount)
                 }
             };
-
-            //Update the counter for selected cat anytime the cat's image is clicked
-            $("#cat-pic").click(function(e) {
-                catList[selectedCatIndex].counter += 1;
-                $("#count1").val(' ' + catList[selectedCatIndex].counter);
-            });
 
 
             //VIEWS
