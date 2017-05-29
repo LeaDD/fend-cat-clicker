@@ -60,39 +60,31 @@
 
 
         <script>
-            //Create an array to hold objects for each cat
-            var catListing = [
+
+            var model = {
+                //Create an array to hold objects for each cat
+                catListing: [
                 {source:'img/suit-cat.jpg',txt:'Cat in a Suit', counter: 0},
                 {source:'img/cat-and-tree.jpg',txt:'Cat by a Tree', counter: 0},
                 {source:'img/dragon-kitty.jpg',txt:'Firebreathing Cat', counter: 0},
                 {source:'img/kitty-burrito.jpg',txt:'Cat Rolled in a Rug', counter: 0},
                 {source:'img/rambo-cats.jpg',txt:'Cats with a Gun', counter: 0}
-            ];
+                ]
+            };
 
-            //Populate the select node with available cat options
-            function loadCatList() {
-                for(var i = 0; catListing.length > i; i++) {
-                    $('#catPick').append('<option>' + catListing[i].txt);
-                    //Initialize the image window with the first object in array
-                    if(i===0) {
-                        $('#cat-pic').attr('src', catListing[i].source).attr('alt', catListing[i].txt);
-                        $('.catHdr').text(catListing[i].txt);
-                    }
-                }
-            }
-
-            loadCatList();
 
             //This variable will hold the array index of the cat the user has selected
             var selectedCatIndex = 0;
 
             //Switch the cat image and header value based on user selection
             $('#catSubmit').click(function() {
-                for(var i = 0; catListing.length > i; i++) {
-                    if($('#catPick').val() === catListing[i].txt) {
-                        $('#cat-pic').attr('src', catListing[i].source).attr('alt', catListing[i].txt);
-                        $("#count1").val(' ' + catListing[i].counter);
-                        $('.catHdr').text(catListing[i].txt);
+                var catList = model.catListing;
+
+                for(var i = 0; model.catListing.length > i; i++) {
+                    if($('#catPick').val() === catList[i].txt) {
+                        $('#cat-pic').attr('src', catList[i].source).attr('alt', catList[i].txt);
+                        $("#count1").val(' ' + catList[i].counter);
+                        $('.catHdr').text(catList[i].txt);
 
                         selectedCatIndex = i;
                         break;
@@ -102,9 +94,26 @@
 
             //Update the counter for selected cat anytime the cat's image is clicked
             $("#cat-pic").click(function(e) {
-                catListing[selectedCatIndex].counter += 1;
-                $("#count1").val(' ' + catListing[selectedCatIndex].counter);
+                model.catListing[selectedCatIndex].counter += 1;
+                $("#count1").val(' ' + model.catListing[selectedCatIndex].counter);
             });
+
+            var view = {
+                //Populate the select node with available cat options
+                loadCatList: function() {
+                    for(var i = 0; model.catListing.length > i; i++) {
+                        $('#catPick').append('<option>' + model.catListing[i].txt);
+                        //Initialize the image window with the first object in array
+                        if(i===0) {
+                            $('#cat-pic').attr('src', model.catListing[i].source).attr('alt', model.catListing[i].txt);
+                            $('.catHdr').text(model.catListing[i].txt);
+                        }
+                    }
+                }
+            };
+
+            view.loadCatList();
+            console.log(JSON.stringify(model.catListing));
 
         </script>
 
