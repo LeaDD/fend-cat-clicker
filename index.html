@@ -77,15 +77,21 @@
             //This variable will hold the array index of the cat the user has selected
             var selectedCatIndex = 0;
 
+            var catList = model.catListing;
+
+            var octopus = {
+                updateCatPic: function(cat) {
+                    $('#cat-pic').attr('src', catList[cat].source).attr('alt', catList[cat].txt);
+                    $("#count1").val(' ' + catList[cat].counter);
+                    $('.catHdr').text(catList[cat].txt);
+                }
+            };
+
             //Switch the cat image and header value based on user selection
             $('#catSubmit').click(function() {
-                var catList = model.catListing;
-
                 for(var i = 0; model.catListing.length > i; i++) {
                     if($('#catPick').val() === catList[i].txt) {
-                        $('#cat-pic').attr('src', catList[i].source).attr('alt', catList[i].txt);
-                        $("#count1").val(' ' + catList[i].counter);
-                        $('.catHdr').text(catList[i].txt);
+                        octopus.updateCatPic(i);
 
                         selectedCatIndex = i;
                         break;
@@ -95,8 +101,8 @@
 
             //Update the counter for selected cat anytime the cat's image is clicked
             $("#cat-pic").click(function(e) {
-                model.catListing[selectedCatIndex].counter += 1;
-                $("#count1").val(' ' + model.catListing[selectedCatIndex].counter);
+                catList[selectedCatIndex].counter += 1;
+                $("#count1").val(' ' + catList[selectedCatIndex].counter);
             });
 
 
@@ -104,12 +110,11 @@
             var view = {
                 //Populate the select node with available cat options
                 loadCatList: function() {
-                    for(var i = 0; model.catListing.length > i; i++) {
-                        $('#catPick').append('<option>' + model.catListing[i].txt);
+                    for(var i = 0; catList.length > i; i++) {
+                        $('#catPick').append('<option>' + catList[i].txt);
                         //Initialize the image window with the first object in array
                         if(i===0) {
-                            $('#cat-pic').attr('src', model.catListing[i].source).attr('alt', model.catListing[i].txt);
-                            $('.catHdr').text(model.catListing[i].txt);
+                            octopus.updateCatPic(i);
                         }
                     }
                 }
