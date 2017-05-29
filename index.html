@@ -73,31 +73,26 @@
                 ]
             };
 
+            var catList = model.catListing;
+
 
             //This variable will hold the array index of the cat the user has selected
             var selectedCatIndex = 0;
 
-            var catList = model.catListing;
-
+            //OCTOPUS
             var octopus = {
                 updateCatPic: function(cat) {
                     $('#cat-pic').attr('src', catList[cat].source).attr('alt', catList[cat].txt);
                     $("#count1").val(' ' + catList[cat].counter);
                     $('.catHdr').text(catList[cat].txt);
+                },
+                init: function() {
+                    view.loadCatList();
+                    var catImg = $('#catSubmit');
+                    catImg.click(view.switchCat);
+
                 }
             };
-
-            //Switch the cat image and header value based on user selection
-            $('#catSubmit').click(function() {
-                for(var i = 0; model.catListing.length > i; i++) {
-                    if($('#catPick').val() === catList[i].txt) {
-                        octopus.updateCatPic(i);
-
-                        selectedCatIndex = i;
-                        break;
-                    }
-                }
-            });
 
             //Update the counter for selected cat anytime the cat's image is clicked
             $("#cat-pic").click(function(e) {
@@ -117,11 +112,24 @@
                             octopus.updateCatPic(i);
                         }
                     }
+                },
+                //Switch the cat image and header value based on user selection
+                switchCat: function() {
+                    for(var i = 0; model.catListing.length > i; i++) {
+                        if($('#catPick').val() === catList[i].txt) {
+                            octopus.updateCatPic(i);
+
+                            //Populate variable that identifies currently selected cat and
+                            //exit the loop
+                            selectedCatIndex = i;
+                            break;
+                        }
+                    }
                 }
             };
 
-            view.loadCatList();
-            console.log(JSON.stringify(model.catListing));
+            octopus.init();
+            //console.log(JSON.stringify(model.catListing));
 
         </script>
 
