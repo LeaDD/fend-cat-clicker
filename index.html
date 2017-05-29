@@ -95,7 +95,7 @@
                     //Add event listeners to submit and pic
                     var catImg = $('#catSubmit');
                     var catCntr = $("#cat-pic");
-                    catImg.click(view.switchCat);
+                    catImg.click(view.renderCat);
                     catCntr.click(model.updateCount)
                 }
             };
@@ -114,7 +114,7 @@
                     }
                 },
                 //Switch the cat image and header value based on user selection
-                switchCat: function() {
+                renderCat: function() {
                     for(var i = 0; model.catListing.length > i; i++) {
                         if($('#catPick').val() === catList[i].txt) {
                             octopus.updateCatPic(i);
