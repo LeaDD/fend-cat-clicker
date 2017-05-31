@@ -63,6 +63,7 @@
 
             //MODEL
             var model = {
+                currentCat: null,
                 //Create an array to hold objects for each cat
                 catListing: [
                 {source:'img/suit-cat.jpg',txt:'Cat in a Suit', counter: 0},
@@ -70,33 +71,31 @@
                 {source:'img/dragon-kitty.jpg',txt:'Firebreathing Cat', counter: 0},
                 {source:'img/kitty-burrito.jpg',txt:'Cat Rolled in a Rug', counter: 0},
                 {source:'img/rambo-cats.jpg',txt:'Cats with a Gun', counter: 0}
-                ],
-                updateCount: function(e) {
-                    catList[selectedCatIndex].counter += 1;
-                    $("#count1").val(' ' + catList[selectedCatIndex].counter);
-                }
+                ]
             };
-
-            var catList = model.catListing;
-
-            //This variable will hold the array index of the cat the user has selected
-            var selectedCatIndex = 0;
 
             //OCTOPUS
             var octopus = {
-                updateCatPic: function(cat) {
-                    $('#cat-pic').attr('src', catList[cat].source).attr('alt', catList[cat].txt);
-                    $("#count1").val(' ' + catList[cat].counter);
-                    $('.catHdr').text(catList[cat].txt);
-                },
                 init: function() {
-                    view.loadCatList();
+                    model.currentCat = model.catListing[0];
 
-                    //Add event listeners to submit and pic
-                    var catImg = $('#catSubmit');
-                    var catCntr = $("#cat-pic");
-                    catImg.click(view.renderCat);
-                    catCntr.click(model.updateCount)
+                    view.loadCatList();
+                    //Add event listeners to submit button and pic
+                    $('#catSubmit').click(view.selectCat);
+                    $("#cat-pic").click(this.updateCount);
+                },
+                getCurrentCat: function() {
+                    return model.currentCat;
+                },
+                getCatList: function() {
+                    return model.catListing;
+                },
+                setCurrentCat: function(cat) {
+                    model.currentCat = cat;
+                },
+                updateCount: function(e) {
+                    model.currentCat.counter++;
+                    $("#count1").val(' ' + model.currentCat.counter);
                 }
             };
 
@@ -105,27 +104,32 @@
             var view = {
                 //Populate the select node with available cat options
                 loadCatList: function() {
-                    for(var i = 0; catList.length > i; i++) {
-                        $('#catPick').append('<option>' + catList[i].txt);
-                        //Initialize the image window with the first object in array
-                        if(i===0) {
-                            octopus.updateCatPic(i);
-                        }
-                    }
+                    var cats = octopus.getCatList();
+                    for(var i = 0; cats.length > i; i++) {
+                        $('#catPick').append('<option>' + cats[i].txt);
+                    };
+                    //Initialize the image window with the first object in array
+                    this.renderCat(cats[0]);
                 },
                 //Switch the cat image and header value based on user selection
-                renderCat: function() {
-                    for(var i = 0; model.catListing.length > i; i++) {
-                        if($('#catPick').val() === catList[i].txt) {
-                            octopus.updateCatPic(i);
-
-                            //Populate variable that identifies currently selected cat and
-                            //exit the loop
-                            selectedCatIndex = i;
+                selectCat: function() {
+                    var cats = octopus.getCatList();
+                    for(var i = 0; cats.length > i; i++) {
+                        if($('#catPick').val() === cats[i].txt) {
+                            //When a match is found populate variable that identifies currently selected cat and
+                            octopus.setCurrentCat(cats[i]);
+                            //Render the cat and
+                            view.renderCat(cats[i]);
+                            //Finally exit the loop
                             break;
                         }
                     }
-                }
+                },
+                renderCat: function(cat) {
+                    $('#cat-pic').attr('src', cat.source).attr('alt', cat.txt);
+                    $("#count1").val(' ' + cat.counter);
+                    $('.catHdr').text(cat.txt);
+                },
             };
 
             octopus.init();
