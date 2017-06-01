@@ -118,12 +118,12 @@
                         if($('#catPick').val() === cats[i].txt) {
                             //When a match is found populate variable that identifies currently selected cat and
                             octopus.setCurrentCat(cats[i]);
-                            //Render the cat and
-                            view.renderCat(cats[i]);
-                            //Finally exit the loop
+                            //Exit the loop
                             break;
-                        }
-                    }
+                        };
+                    };
+                    //RESEARCH WHY 'THIS' KEYWORD DOES NOT WORK HERE
+                    view.renderCat(octopus.getCurrentCat());
                 },
                 renderCat: function(cat) {
                     $('#cat-pic').attr('src', cat.source).attr('alt', cat.txt);
