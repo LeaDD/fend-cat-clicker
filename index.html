@@ -73,7 +73,9 @@
                     <div class='col-xs-3'></div>
                     <div class='col-xs-6' id='adminArea'>
                         <form id='adminForm'>
+                            <!--Admin Button -->
                             <input type='button' id=catAdmin value='Admin'><br>
+                            <!--Admin Form -->
                             <div class='form-group'>
                                 <label class="col-form-label">Name:</label>
                                 <input type='text' class='form-control' id='adminName'><br>
@@ -94,7 +96,6 @@
 
 
         <script>
-
             //MODEL
             var model = {
                 currentCat: null,
@@ -119,6 +120,7 @@
                     $('#catSubmit').click(view.selectCat);
                     $('#cat-pic').click(this.updateCount);
                     $('#catAdmin').click(view.renderAdmin);
+                    $('#cancelAdmin').click(view.cancelAdmin);
                 },
                 getCurrentCat: function() {
                     return model.currentCat;
@@ -140,7 +142,6 @@
                     $("#count1").val(' ' + model.currentCat.counter);
                 }
             };
-
 
             //VIEWS
             var view = {
@@ -192,6 +193,10 @@
                         $('#adminURL').val(cat.source);
                         $('#adminClicks').val(cat.counter);
                     }
+                },
+                cancelAdmin: function() {
+                    octopus.setAdminState(false);
+                    $('.form-group').css('visibility','hidden');
                 }
             };
 
