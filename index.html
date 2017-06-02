@@ -33,6 +33,15 @@
             #adminArea {
                 margin-top: 25px;
             }
+
+            #cancelAdmin, #saveAdmin, #catAdmin {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .form-group {
+                visibility: hidden;
+            }
         </style>
 
         <title>Cat Clicker</title>
@@ -58,16 +67,27 @@
                         <input type='text' name='firstCount' id='count1'>
                     </form>
                 </div>
-            </div>
-            <div class='row' id='adminArea'>
-                <div class='col-sm-3'>
-                </div>
 
-                <div class='col-sm-9'>
-                    <p>
-                        THIS AREA WILL HOLD THE NEW ADMIN FUNCTIONALITY
-                    </p>
+                <!--Admin Area -->
+                <div class='row'>
+                    <div class='col-xs-3'></div>
+                    <div class='col-xs-6' id='adminArea'>
+                        <form id='adminForm'>
+                            <input type='button' id=catAdmin value='Admin'><br>
+                            <div class='form-group'>
+                                <label class="col-form-label">Name:</label>
+                                <input type='text' class='form-control' id='adminName'><br>
+                                <label class="col-form-label">Img URL:</label>
+                                <input type='text' class='form-control' id='adminURL'><br>
+                                <label class="col-form-label"l># Clicks:</label>
+                                <input type='text' class='form-control' id='adminClicks'>
 
+                                <input type='button' id=cancelAdmin value='Cancel'>
+                                <input type='button' id=catSave value='Save'>
+                            </div>
+                        </form>
+                    </div>
+                    <div class='col-xs-3'></div>
                 </div>
             </div>
         </div>
@@ -78,6 +98,7 @@
             //MODEL
             var model = {
                 currentCat: null,
+                adminVisible: false,
                 //Create an array to hold objects for each cat
                 catListing: [
                 {source:'img/suit-cat.jpg',txt:'Cat in a Suit', counter: 0},
@@ -96,7 +117,8 @@
                     view.loadCatList();
                     //Add event listeners to submit button and pic
                     $('#catSubmit').click(view.selectCat);
-                    $("#cat-pic").click(this.updateCount);
+                    $('#cat-pic').click(this.updateCount);
+                    $('#catAdmin').click(view.renderAdmin);
                 },
                 getCurrentCat: function() {
                     return model.currentCat;
@@ -106,6 +128,12 @@
                 },
                 setCurrentCat: function(cat) {
                     model.currentCat = cat;
+                },
+                getAdminState: function() {
+                    return model.adminVisible;
+                },
+                setAdminState: function(state) {
+                    model.adminVisible = state;
                 },
                 updateCount: function(e) {
                     model.currentCat.counter++;
@@ -136,6 +164,13 @@
                             break;
                         };
                     };
+
+                    //If the user had the admin area open, close it
+                    if(octopus.getAdminState() === true) {
+                        octopus.setAdminState(false);
+                        $('.form-group').css('visibility','hidden');
+                    };
+
                     //RESEARCH WHY 'THIS' KEYWORD DOES NOT WORK HERE
                     view.renderCat(octopus.getCurrentCat());
                 },
@@ -144,6 +179,20 @@
                     $("#count1").val(' ' + cat.counter);
                     $('.catHdr').text(cat.txt);
                 },
+                renderAdmin: function() {
+                    //Check to see if admin area is already shown
+                    if(octopus.getAdminState() === false) {
+                        //If not flip state to true and dom node to visible
+                        octopus.setAdminState(true);
+                        $('.form-group').css('visibility','visible');
+
+                        //Get current values for the fields and display in input
+                        var cat = octopus.getCurrentCat();
+                        $('#adminName').val(cat.txt);
+                        $('#adminURL').val(cat.source);
+                        $('#adminClicks').val(cat.counter);
+                    }
+                }
             };
 
             octopus.init();
