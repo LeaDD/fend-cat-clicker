@@ -121,6 +121,7 @@
                     $('#cat-pic').click(this.updateCount);
                     $('#catAdmin').click(view.renderAdmin);
                     $('#cancelAdmin').click(view.cancelAdmin);
+                    $('#catSave').click(view.saveAdmin);
                 },
                 getCurrentCat: function() {
                     return model.currentCat;
@@ -136,6 +137,9 @@
                 },
                 setAdminState: function(state) {
                     model.adminVisible = state;
+                },
+                addCat: function() {
+
                 },
                 updateCount: function(e) {
                     model.currentCat.counter++;
@@ -197,6 +201,18 @@
                 cancelAdmin: function() {
                     octopus.setAdminState(false);
                     $('.form-group').css('visibility','hidden');
+                },
+                saveAdmin: function() {
+                    //Capture values entered in the admin area
+                    var saveName = $('#adminName').val();
+                    var saveUrl = $('#adminURL').val();
+                    var saveCount = $('#adminClicks').val();
+
+                    //Build object to insert into catListing array
+                    var newCat = {'source':saveUrl, 'txt':saveName, 'counter':saveCount};
+                    //TEST
+                    console.log(model.catListing[0]);
+                    console.log(newCat);
                 }
             };
 
