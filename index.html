@@ -209,7 +209,7 @@
                     var saveCount = $('#adminClicks').val();
 
                     //Build object to insert into catListing array
-                    var newCat = {'source':saveUrl, 'txt':saveName, 'counter':saveCount};
+                    var newCat = {'source':saveUrl, 'txt':saveName, 'counter':Number(saveCount)};
                     //TESTING
                     console.log(model.catListing[0]);
                     console.log(newCat);
