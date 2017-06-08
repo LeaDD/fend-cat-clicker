@@ -138,8 +138,10 @@
                 setAdminState: function(state) {
                     model.adminVisible = state;
                 },
-                addCat: function() {
-
+                pushCat: function(cat) {
+                	model.catListing.push(cat);
+                	this.setCurrentCat(cat);
+                	view.renderCat(cat);
                 },
                 updateCount: function(e) {
                     model.currentCat.counter++;
@@ -211,8 +213,8 @@
                     //Build object to insert into catListing array
                     var newCat = {'source':saveUrl, 'txt':saveName, 'counter':Number(saveCount)};
                     //TESTING
-                    console.log(model.catListing[0]);
-                    console.log(newCat);
+
+                    octopus.pushCat(newCat);
                 }
             };
 
