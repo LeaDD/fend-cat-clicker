@@ -1,0 +1,36 @@
+
+img, embed, object, video {
+    max-width: 100%;
+    height: 100%;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.img-caption {
+    text-align: center;
+    font-size:26px;
+}
+
+#catSubmit {
+    margin-bottom: 5px;
+    color: blue;
+}
+
+#adminArea {
+    margin-top: 25px;
+}
+
+#cancelAdmin, #saveAdmin, #catAdmin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    visibility: hidden;
+}
+        
