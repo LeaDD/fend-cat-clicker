@@ -44,6 +44,7 @@ var octopus = {
     	model.catListing.push(cat);
     	this.setCurrentCat(cat);
     	view.renderCat(cat);
+        view.loadCatList();
     },
     updateCount: function(e) {
         model.currentCat.counter++;
@@ -55,12 +56,17 @@ var octopus = {
 var view = {
     //Populate the select node with available cat options
     loadCatList: function() {
+        //Empty the pick list
+        $('#catPick').empty();
         var cats = octopus.getCatList();
+        
+        //Populate the pick list
         for(var i = 0; cats.length > i; i++) {
             $('#catPick').append('<option>' + cats[i].txt);
         };
-        //Initialize the image window with the first object in array
-        this.renderCat(cats[0]);
+        //Initialize the image window with the current cat
+        var cat = octopus.getCurrentCat();
+        this.renderCat(cat);
     },
     //Switch the cat image and header value based on user selection
     selectCat: function() {
@@ -114,8 +120,9 @@ var view = {
 
         //Build object to insert into catListing array
         var newCat = {'source':saveUrl, 'txt':saveName, 'counter':Number(saveCount)};
-        //TESTING
-
+        
+        //Push the new cat into the catlisting, render the new cat and rebuild the
+        //cat pick list to include the new cat
         octopus.pushCat(newCat);
     }
 };
